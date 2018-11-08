@@ -1,33 +1,72 @@
-node {
- 	// Clean workspace before doing anything
-    deleteDir()
+def call(body) {
+  def config = [:]
+  def emptyList = []
+  def branchName = BRANCH_NAME
+  body.resolveStrategy = Closure.DELEGATE_FIRST
+  body.delegate = config
+  body()
 
-    try {
-        stage ('Clone') {
-        	checkout scm
+  if(!config.numberOfBuildsToKeep) {
+        config.numberOfBuildsToKeep = 3
+  }
+
+
+  if(!config.notifyCulpritsOnBranchFailures){
+    config.notifyCulpritsOnBranchFailures = true
+  }
+
+  try {
+    pipeline {
+      agent any
+
+    /**
+    * These are the stages of our pipeline. This compiles our code, builds the site, and deploys it.
+    */
+    stages {
+
+      stage('Checkout') {
+        steps{
+        checkout scm
         }
-        stage ('Build') {
-        	sh "echo 'shell scripts to build project...'"
+
+      }
+
+      stage('Install') {
+        steps {
         }
-        stage ('Tests') {
-	        parallel 'static': {
-	            sh "echo 'shell scripts to run static tests...'"
-	        },
-	        'unit': {
-	            sh "echo 'shell scripts to run unit tests...'"
-	        },
-	        'integration': {
-	            sh "echo 'shell scripts to run integration tests...'"
-	        }
+      }
+
+      stage('SonarQube Branch Analysis') {
+        steps {
         }
-      	stage ('Deploy') {
-            sh "echo 'shell scripts to deploy to server...'"
-      	}
-    } catch (err) {
-        currentBuild.result = 'FAILED'
-        throw err
+      }
+
+      stage('Master branch : SonarQube Analysis') {
+        steps {
+        }
+      }
+
+      stage('Publish Test Reports'){
+        steps {
+        }
+      }
+
+      stage ('Deploy Artifacts') {
+        steps {
+        }
+      }
+
+      stage('Publish Site') {
+        steps{
+        }
+      }
     }
+  }
+  }finally{
+    notify {
+              culpritOnBranchFailures = config.notifyCulpritsOnBranchFailures
+              emailRecipientsForMasterFailures = config.masterFailuresEmailTo
+              teamsWebhook = config.teamsWebhook
+    }
+  }
 }
-
-
-
