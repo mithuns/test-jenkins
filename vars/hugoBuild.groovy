@@ -24,40 +24,28 @@ def call(body) {
     */
     stages {
 
-      stage('Checkout') {
+      stage('Download And Install hugo if not present') {
         steps{
-        checkout scm
+          checkout scm
         }
 
       }
 
-      stage('Install') {
+      stage('Checkout branch') {
         steps {
+          checkout scm
         }
       }
 
-      stage('SonarQube Branch Analysis') {
+      stage('Run Hugo') {
         steps {
+          run hugo
         }
       }
 
-      stage('Master branch : SonarQube Analysis') {
+      stage('Push public folder contents to gh-pages') {
         steps {
-        }
-      }
-
-      stage('Publish Test Reports'){
-        steps {
-        }
-      }
-
-      stage ('Deploy Artifacts') {
-        steps {
-        }
-      }
-
-      stage('Publish Site') {
-        steps{
+          gh-pages
         }
       }
     }
