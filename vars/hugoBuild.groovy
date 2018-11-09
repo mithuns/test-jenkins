@@ -32,10 +32,5 @@ def call(body) {
     }
   }
   }finally{
-    notify {
-              culpritOnBranchFailures = config.notifyCulpritsOnBranchFailures
-              emailRecipientsForMasterFailures = config.masterFailuresEmailTo
-              teamsWebhook = config.teamsWebhook
-    }
   }
 }
