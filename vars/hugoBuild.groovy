@@ -28,25 +28,6 @@ def call(body) {
         steps{
           checkout scm
         }
-
-      }
-
-      stage('Checkout branch') {
-        steps {
-          checkout scm
-        }
-      }
-
-      stage('Run Hugo') {
-        steps {
-          run hugo
-        }
-      }
-
-      stage('Push public folder contents to gh-pages') {
-        steps {
-          gh-pages
-        }
       }
     }
   }
