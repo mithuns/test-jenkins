@@ -41,8 +41,7 @@ def call(body) {
 					echo 'Deploying....'
 				}
 			}
-		}
-	} 	  
+		} 
   }finally{
   }
 }
