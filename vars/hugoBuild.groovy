@@ -15,17 +15,15 @@ def call(body) {
     config.notifyCulpritsOnBranchFailures = true
   }
 
-	try {
-		pipeline {
-			agent{
-		  		docker {
-            		image 'felicianotech/docker-hugo:0.50' 
-            		args '-v /root/.m2:/root/.m2' 
-		  		}
-			}
+	
+pipeline {
+	agent{
+	    docker {
+            image 'felicianotech/docker-hugo:0.50' 
+            args '-v /root/.m2:/root/.m2' 
+		  	}
 		}
-
-		stages {
+        stages{
 			stage('Build') {
 				steps {
 					echo 'Building..'
@@ -41,7 +39,5 @@ def call(body) {
 					echo 'Deploying....'
 				}
 			}
-		} 
-  }finally{
-  }
+        }
 }
