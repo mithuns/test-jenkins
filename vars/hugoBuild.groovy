@@ -15,22 +15,24 @@ def call(body) {
     config.notifyCulpritsOnBranchFailures = true
   }
 
-  try {
-    pipeline {
-      agent any
-
-    /**
-    * These are the stages of our pipeline. This compiles our code, builds the site, and deploys it.
-    */
-    stages {
-
-      stage('Download And Install hugo if not present') {
-        steps{
-          checkout scm
-        }
-      }
-    }
-  }
+  try 
+  {
+  	pipeline 
+	  {
+   		agent any
+   		stages 
+		  {
+      		stage('Source') 
+			  {
+        		git branch: 'test', url: 'git@diyvb:repos/gradle-greetings'
+         		stash name: 'test-sources', includes: 'build.gradle,/src/test'
+      		  }
+      		stage('Build') 
+			{
+         
+      		}
+   		}
+  	}
   }finally{
   }
 }
