@@ -22,18 +22,20 @@ def call(body) {
    		agent any
    		stages 
 		{
-		   stage('Source') 
-		{
-			steps{
-				scm checkout
-			}	 
-		}
-      		stage('Build') 
+			   stage('Source') 
 			{
-         
-      		}
-   		}
-  	}
+				steps{
+					scm checkout
+				}	 
+			}
+				stage('Build') 
+			{
+				steps{
+					scm checkout
+			}	 
+      	}
+   	}
+  }
   }finally{
   }
 }
