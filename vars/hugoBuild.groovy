@@ -15,27 +15,28 @@ def call(body) {
     config.notifyCulpritsOnBranchFailures = true
   }
 
-  try 
-  {
-  	pipeline 
-	  {
-   		agent any
-   		stages 
-		{
-			   stage('Source') 
-			{
-				steps{
-					scm checkout
-				}	 
+  try {
+	  pipeline {
+		agent any
+
+		stages {
+			stage('Build') {
+				steps {
+					echo 'Building..'
+				}
 			}
-				stage('Build') 
-			{
-				steps{
-					scm checkout
-			}	 
-      	}
-   	}
-  }
+			stage('Test') {
+				steps {
+					echo 'Testing..'
+				}
+			}
+			stage('Deploy') {
+				steps {
+					echo 'Deploying....'
+				}
+			}
+		}
+	} 	  
   }finally{
   }
 }
