@@ -16,28 +16,29 @@ def call(body) {
   }
 
 	
-pipeline {
-	agent{
-	    docker {
-            image 'felicianotech/docker-hugo:0.50' 
-            args '-v /root/.m2:/root/.m2' 
-		  	}
-		}
-        stages{
-			stage('Build') {
-				steps {
-					echo 'Building..'
-				}
-			}
-			stage('Test') {
-				steps {
-					echo 'Testing..'
-				}
-			}
-			stage('Deploy') {
-				steps {
-					echo 'Deploying....'
-				}
-			}
-        }
+    pipeline {
+        agent{
+            docker {
+                image 'felicianotech/docker-hugo:0.50' 
+                args '-v /root/.m2:/root/.m2' 
+                }
+            }
+            stages{
+                stage('Build') {
+                    steps {
+                        echo 'Building..'
+                    }
+                }
+                stage('Test') {
+                    steps {
+                        echo 'Testing..'
+                    }
+                }
+                stage('Deploy') {
+                    steps {
+                        echo 'Deploying....'
+                    }
+                }
+            }
+    }
 }
