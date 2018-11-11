@@ -18,27 +18,27 @@ def call(body) {
 	
     pipeline {
 	    agent {
-	    	image 'monachus/hugo'
+			docker { image 'monachus/hugo' }
 	    }
-            stages{
-                stage('checkout') {
-                    steps {
-                        echo 'Building..'
+        stages{
+            stage('checkout') {
+                steps {
+                    echo 'Building..'
 						checkout scm
-                    }
+				}
+			}
+            stage('build website') {
+                steps {
+                    echo 'Building..'
+					sh 'hugo'
                 }
-                stage('build website') {
-                    steps {
-                        echo 'Building..'
-						sh 'hugo'
-                    }
-                }
-                stage('Deploy to gh-pages') {
-                    steps {
-                        echo 'Deploying....'
+            }
+            stage('Deploy to gh-pages') {
+                steps {
+                    echo 'Deploying....'
 						sh 'gh-pages deploy'
                     }
                 }
             }
-    }
+       }
 }
