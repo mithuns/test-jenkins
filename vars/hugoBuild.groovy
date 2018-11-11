@@ -30,13 +30,13 @@ def call(body) {
                 stage('build website') {
                     steps {
                         echo 'Building..'
-						sh "hugo"
+						sh 'hugo'
                     }
                 }
                 stage('Deploy to gh-pages') {
                     steps {
                         echo 'Deploying....'
-						gh-pages deploy
+						sh 'gh-pages deploy'
                     }
                 }
             }
