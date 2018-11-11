@@ -17,21 +17,26 @@ def call(body) {
 
 	
     pipeline {
-        agent any
+	    agent {
+	    	image 'monachus/hugo'
+	    }
             stages{
-                stage('Build') {
+                stage('checkout') {
                     steps {
                         echo 'Building..'
+						checkout scm
                     }
                 }
-                stage('Test') {
+                stage('build website') {
                     steps {
-                        echo 'Testing..'
+                        echo 'Building..'
+						sh "hugo"
                     }
                 }
-                stage('Deploy') {
+                stage('Deploy to gh-pages') {
                     steps {
                         echo 'Deploying....'
+						gh-pages deploy
                     }
                 }
             }
